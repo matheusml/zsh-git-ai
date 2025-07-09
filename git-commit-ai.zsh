@@ -13,15 +13,14 @@ fi
 show_spinner() {
     local pid=$1
     local delay=0.1
-    local spinstr='|/-\'
+    local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
         local temp=${spinstr#?}
-        printf " [%c] Generating commit message..." "$spinstr"
+        printf "\r\033[36m%s\033[0m Generating commit message..." "${spinstr:0:1}"
         local spinstr=$temp${spinstr%"$temp"}
-        printf "\r"
         sleep $delay
     done
-    printf "    \r"
+    printf "\r\033[K"
 }
 
 # Function to call Claude API
@@ -91,11 +90,17 @@ git() {
             # Get the diff of staged changes
             local diff=$(command git diff --cached)
             
+            # Disable job control messages
+            set +m
+            
             # Generate commit message with spinner
             (generate_commit_message "$diff" > /tmp/git-commit-ai-message.tmp 2>&1) &
             local generate_pid=$!
             show_spinner $generate_pid
             wait $generate_pid 2>/dev/null
+            
+            # Re-enable job control
+            set -m
             
             if [[ ! -f /tmp/git-commit-ai-message.tmp ]]; then
                 echo "Error: Failed to generate commit message"
@@ -111,14 +116,13 @@ git() {
             fi
             
             # Display the generated message
-            echo "\nGenerated commit message:"
-            echo "------------------------"
-            echo "$generated_message"
-            echo "------------------------"
+            echo
+            echo "\033[32m✓\033[0m \033[1m$generated_message\033[0m"
+            echo
             
             # Prompt user for action
             while true; do
-                echo -n "\n[A]ccept, [E]dit, [R]egenerate, or [C]ancel? "
+                echo -n "\033[36m→\033[0m \033[90m[A]ccept  [E]dit  [R]egenerate  [C]ancel\033[0m "
                 read -k 1 choice
                 echo
                 
@@ -144,22 +148,22 @@ git() {
                         ;;
                     r|R)
                         # Regenerate the message
-                        echo "Regenerating commit message..."
+                        set +m
                         (generate_commit_message "$diff" > /tmp/git-commit-ai-message.tmp 2>&1) &
                         local regenerate_pid=$!
                         show_spinner $regenerate_pid
                         wait $regenerate_pid 2>/dev/null
+                        set -m
                         
                         generated_message=$(cat /tmp/git-commit-ai-message.tmp)
                         rm -f /tmp/git-commit-ai-message.tmp
                         
-                        echo "\nGenerated commit message:"
-                        echo "------------------------"
-                        echo "$generated_message"
-                        echo "------------------------"
+                        echo
+                        echo "\033[32m✓\033[0m \033[1m$generated_message\033[0m"
+                        echo
                         ;;
                     c|C)
-                        echo "Commit cancelled"
+                        echo "\033[33m✗\033[0m Commit cancelled"
                         break
                         ;;
                     *)
