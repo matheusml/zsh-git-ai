@@ -33,7 +33,7 @@ generate_commit_message() {
         # Use jq if available for proper JSON encoding
         json_payload=$(jq -n \
             --arg model "claude-3-5-sonnet-20241022" \
-            --arg content "Generate a concise git commit message for the following changes. Only return the commit message, nothing else:
+            --arg content "Generate a concise git commit message for the following changes. Write a clear, descriptive message without any prefix like 'feat:', 'docs:', 'fix:', etc. Just describe what was changed. Only return the commit message, nothing else:
 
 $diff" \
             '{
@@ -52,7 +52,7 @@ $diff" \
             \"max_tokens\": 100,
             \"messages\": [{
                 \"role\": \"user\",
-                \"content\": \"Generate a concise git commit message for the following changes. Only return the commit message, nothing else:\\n\\n${escaped_diff}\"
+                \"content\": \"Generate a concise git commit message for the following changes. Write a clear, descriptive message without any prefix like 'feat:', 'docs:', 'fix:', etc. Just describe what was changed. Only return the commit message, nothing else:\\n\\n${escaped_diff}\"
             }]
         }"
     fi

@@ -4,11 +4,10 @@ This guide covers all installation methods for zsh-git-ai.
 
 ## Prerequisites
 
-- **zsh** 5.0 or higher
-- **git**
-- **curl** (for API calls)
-- **Claude API key** from [Anthropic Console](https://console.anthropic.com/)
-- Optional: **jq** (for better JSON handling)
+- ✅ zsh 5.0+ (you probably already have this)
+- ✅ `git` (you probably already have this)
+- ✅ `curl` (already on macOS/Linux)
+- ➕ `jq` (optional, for better reliability)
 
 ## Quick Install
 
