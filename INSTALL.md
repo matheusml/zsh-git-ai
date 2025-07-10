@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide covers all installation methods for git-commit-ai.
+This guide covers all installation methods for zsh-git-ai.
 
 ## Prerequisites
 
@@ -14,10 +14,10 @@ This guide covers all installation methods for git-commit-ai.
 
 ```bash
 # Clone the repository
-git clone https://github.com/matheusml/git-commit-ai ~/.git-commit-ai
+git clone https://github.com/matheusml/zsh-git-ai ~/.zsh-git-ai
 
 # Add to your .zshrc
-echo "source ~/.git-commit-ai/git-commit-ai.zsh" >> ~/.zshrc
+echo "source ~/.zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 
 # Set your API key
 echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.zshrc
@@ -32,10 +32,10 @@ source ~/.zshrc
 
 ```bash
 # Clone to your preferred location
-git clone https://github.com/matheusml/git-commit-ai ~/Apps/git-commit-ai
+git clone https://github.com/matheusml/zsh-git-ai ~/Apps/zsh-git-ai
 
 # Source in your .zshrc
-echo "source ~/Apps/git-commit-ai/git-commit-ai.zsh" >> ~/.zshrc
+echo "source ~/Apps/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 
 # Reload
 source ~/.zshrc
@@ -45,12 +45,12 @@ source ~/.zshrc
 
 ```bash
 # Clone to Oh My Zsh custom plugins
-git clone https://github.com/matheusml/git-commit-ai \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/git-commit-ai
+git clone https://github.com/matheusml/zsh-git-ai \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-git-ai
 
 # Add to your .zshrc plugins list
-# Edit ~/.zshrc and add git-commit-ai to plugins=()
-# Example: plugins=(git git-commit-ai)
+# Edit ~/.zshrc and add zsh-git-ai to plugins=()
+# Example: plugins=(git zsh-git-ai)
 
 # Reload
 source ~/.zshrc
@@ -60,28 +60,28 @@ source ~/.zshrc
 
 Add to your `.zshrc`:
 ```bash
-antigen bundle matheusml/git-commit-ai
+antigen bundle matheusml/zsh-git-ai
 ```
 
 ### 4. Zplug
 
 Add to your `.zshrc`:
 ```bash
-zplug "matheusml/git-commit-ai"
+zplug "matheusml/zsh-git-ai"
 ```
 
 ### 5. Direct Download
 
 ```bash
 # Download the script directly
-curl -o ~/.git-commit-ai.zsh \
-  https://raw.githubusercontent.com/matheusml/git-commit-ai/main/git-commit-ai.zsh
+curl -o ~/.zsh-git-ai.zsh \
+  https://raw.githubusercontent.com/matheusml/zsh-git-ai/main/zsh-git-ai.zsh
 
 # Make it executable
-chmod +x ~/.git-commit-ai.zsh
+chmod +x ~/.zsh-git-ai.zsh
 
 # Source it
-echo "source ~/.git-commit-ai.zsh" >> ~/.zshrc
+echo "source ~/.zsh-git-ai.zsh" >> ~/.zshrc
 source ~/.zshrc
 ```
 
@@ -156,8 +156,8 @@ type git | grep -q "git is a shell function" && echo "✓ Plugin loaded" || echo
 [[ -n "$ANTHROPIC_API_KEY" ]] && echo "✓ API key set" || echo "✗ API key not set"
 
 # Test with a dummy commit
-mkdir /tmp/git-commit-ai-test
-cd /tmp/git-commit-ai-test
+mkdir /tmp/zsh-git-ai-test
+cd /tmp/zsh-git-ai-test
 git init
 echo "test" > test.txt
 git add test.txt
@@ -175,12 +175,12 @@ echo $SHELL  # Should show /bin/zsh or similar
 
 2. Verify source path:
 ```bash
-ls -la ~/.git-commit-ai/git-commit-ai.zsh  # File should exist
+ls -la ~/.zsh-git-ai/zsh-git-ai.zsh  # File should exist
 ```
 
 3. Check .zshrc:
 ```bash
-grep git-commit-ai ~/.zshrc  # Should show the source line
+grep zsh-git-ai ~/.zshrc  # Should show the source line
 ```
 
 ### API Key Issues
@@ -206,7 +206,7 @@ curl -X POST https://api.anthropic.com/v1/messages \
 ### Permission Denied
 
 ```bash
-chmod +x ~/.git-commit-ai/git-commit-ai.zsh
+chmod +x ~/.zsh-git-ai/zsh-git-ai.zsh
 ```
 
 ### Conflicts with Other Plugins
@@ -221,20 +221,20 @@ alias | grep git  # Check aliases
 
 2. Load order matters in .zshrc:
 ```bash
-# Load git-commit-ai after other git plugins
-source ~/.git-commit-ai/git-commit-ai.zsh
+# Load zsh-git-ai after other git plugins
+source ~/.zsh-git-ai/zsh-git-ai.zsh
 ```
 
 ## Uninstallation
 
-To remove git-commit-ai:
+To remove zsh-git-ai:
 
 ```bash
 # Remove the source line from .zshrc
-sed -i '' '/git-commit-ai/d' ~/.zshrc
+sed -i '' '/zsh-git-ai/d' ~/.zshrc
 
 # Remove the installation
-rm -rf ~/.git-commit-ai
+rm -rf ~/.zsh-git-ai
 
 # Remove API key (optional)
 sed -i '' '/ANTHROPIC_API_KEY/d' ~/.zshrc
@@ -248,14 +248,14 @@ source ~/.zshrc
 To update to the latest version:
 
 ```bash
-cd ~/.git-commit-ai
+cd ~/.zsh-git-ai
 git pull origin main
 source ~/.zshrc
 ```
 
 Or set up an alias:
 ```bash
-echo 'alias update-git-commit-ai="cd ~/.git-commit-ai && git pull && cd - && source ~/.zshrc"' >> ~/.zshrc
+echo 'alias update-zsh-git-ai="cd ~/.zsh-git-ai && git pull && cd - && source ~/.zshrc"' >> ~/.zshrc
 ```
 
 ## Advanced Configuration
@@ -264,10 +264,10 @@ echo 'alias update-git-commit-ai="cd ~/.git-commit-ai && git pull && cd - && sou
 
 ```bash
 # Install anywhere you want
-git clone https://github.com/matheusml/git-commit-ai /custom/path/git-commit-ai
+git clone https://github.com/matheusml/zsh-git-ai /custom/path/zsh-git-ai
 
 # Source from custom path
-echo "source /custom/path/git-commit-ai/git-commit-ai.zsh" >> ~/.zshrc
+echo "source /custom/path/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 ```
 
 ### Using with Tmux
@@ -291,4 +291,4 @@ AcceptEnv ANTHROPIC_API_KEY
 
 ---
 
-Need help? Check our [Troubleshooting](#troubleshooting) section or [open an issue](https://github.com/matheusml/git-commit-ai/issues).
+Need help? Check our [Troubleshooting](#troubleshooting) section or [open an issue](https://github.com/matheusml/zsh-git-ai/issues).

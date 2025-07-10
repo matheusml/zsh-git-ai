@@ -1,4 +1,4 @@
-# Contributing to git-commit-ai
+# Contributing to zsh-git-ai
 
 Thanks for wanting to help! We love contributions from everyone. 💙
 
@@ -15,7 +15,7 @@ That's it! We'll help you with the rest.
 
 ```bash
 # Try out your changes
-source git-commit-ai.zsh
+source zsh-git-ai.zsh
 
 # Test with a real commit
 git add some-file
@@ -45,7 +45,7 @@ To test your changes:
 
 ```bash
 # 1. Source the plugin
-source git-commit-ai.zsh
+source zsh-git-ai.zsh
 
 # 2. Create some test changes
 echo "test" > test.txt
@@ -160,4 +160,4 @@ Contributors will be recognized in:
 
 ---
 
-Thank you for contributing to git-commit-ai! Your efforts help make git commits better for everyone.
+Thank you for contributing to zsh-git-ai! Your efforts help make git commits better for everyone.
