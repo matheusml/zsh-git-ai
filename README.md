@@ -33,8 +33,6 @@ $ git commit
 
 **🪶 Lightweight** - Single shell script, no dependencies except optional `jq`
 
-```
-
 ## Quick Start
 
 ### 🍺 Install with Homebrew (Recommended)
