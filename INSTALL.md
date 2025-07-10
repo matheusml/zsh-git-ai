@@ -11,6 +11,25 @@ This guide covers all installation methods for zsh-git-ai.
 
 ## Quick Install
 
+### 🍺 Homebrew (Recommended)
+
+```bash
+# Install via Homebrew
+brew tap matheusml/zsh-git-ai
+brew install zsh-git-ai
+
+# Add to your .zshrc
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+
+# Set your API key
+echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.zshrc
+
+# Reload your shell
+source ~/.zshrc
+```
+
+### Manual Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/matheusml/zsh-git-ai ~/.zsh-git-ai
@@ -27,7 +46,37 @@ source ~/.zshrc
 
 ## Installation Methods
 
-### 1. Manual Installation (Recommended)
+### 1. Homebrew (Recommended for macOS/Linux)
+
+```bash
+# Add the tap
+brew tap matheusml/zsh-git-ai
+
+# Install the package
+brew install zsh-git-ai
+
+# Add to your shell configuration
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+
+# Reload shell
+source ~/.zshrc
+```
+
+#### Updating via Homebrew
+
+```bash
+brew update
+brew upgrade zsh-git-ai
+```
+
+#### Uninstalling via Homebrew
+
+```bash
+brew uninstall zsh-git-ai
+brew untap matheusml/zsh-git-ai
+```
+
+### 2. Manual Installation
 
 ```bash
 # Clone to your preferred location
@@ -40,7 +89,7 @@ echo "source ~/Apps/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### 2. Oh My Zsh Plugin
+### 3. Oh My Zsh Plugin
 
 ```bash
 # Clone to Oh My Zsh custom plugins
@@ -55,21 +104,21 @@ git clone https://github.com/matheusml/zsh-git-ai \
 source ~/.zshrc
 ```
 
-### 3. Antigen
+### 4. Antigen
 
 Add to your `.zshrc`:
 ```bash
 antigen bundle matheusml/zsh-git-ai
 ```
 
-### 4. Zplug
+### 5. Zplug
 
 Add to your `.zshrc`:
 ```bash
 zplug "matheusml/zsh-git-ai"
 ```
 
-### 5. Direct Download
+### 6. Direct Download
 
 ```bash
 # Download the script directly
@@ -246,6 +295,13 @@ source ~/.zshrc
 
 To update to the latest version:
 
+### Homebrew
+```bash
+brew update
+brew upgrade zsh-git-ai
+```
+
+### Manual Installation
 ```bash
 cd ~/.zsh-git-ai
 git pull origin main

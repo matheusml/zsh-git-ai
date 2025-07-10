@@ -37,8 +37,28 @@ $ git commit
 
 ## Quick Start
 
+### 🍺 Install with Homebrew (Recommended)
+
 ```bash
-# 1. Install
+# 1. Install via Homebrew
+brew tap matheusml/zsh-git-ai
+brew install zsh-git-ai
+
+# 2. Add to your shell
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+
+# 3. Set up your API key
+export ANTHROPIC_API_KEY="your-api-key-here"
+
+# 4. Use it!
+git add your-changes
+git commit  # No -m needed!
+```
+
+### Manual Installation
+
+```bash
+# 1. Clone the repository
 git clone https://github.com/matheusml/zsh-git-ai ~/.zsh-git-ai
 echo "source ~/.zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 
