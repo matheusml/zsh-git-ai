@@ -19,6 +19,7 @@ $ git commit
 ✓ Add AI-powered commit message generation with Claude integration
 
 → [A]ccept  [E]dit  [R]egenerate  [C]ancel
+```
 
 ## Why zsh-git-ai?
 
