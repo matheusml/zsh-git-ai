@@ -94,7 +94,7 @@ git() {
             set +m
             
             # Generate commit message with spinner
-            (generate_commit_message "$diff" > /tmp/git-commit-ai-message.tmp 2>&1) &
+            (generate_commit_message "$diff" > /tmp/zsh-git-ai-message.tmp 2>&1) &
             local generate_pid=$!
             show_spinner $generate_pid
             wait $generate_pid 2>/dev/null
@@ -102,13 +102,13 @@ git() {
             # Re-enable job control
             set -m
             
-            if [[ ! -f /tmp/git-commit-ai-message.tmp ]]; then
+            if [[ ! -f /tmp/zsh-git-ai-message.tmp ]]; then
                 echo "Error: Failed to generate commit message"
                 return 1
             fi
             
-            local generated_message=$(cat /tmp/git-commit-ai-message.tmp)
-            rm -f /tmp/git-commit-ai-message.tmp
+            local generated_message=$(cat /tmp/zsh-git-ai-message.tmp)
+            rm -f /tmp/zsh-git-ai-message.tmp
             
             if [[ -z "$generated_message" ]]; then
                 echo "Error: Generated message is empty"
@@ -149,14 +149,14 @@ git() {
                     r|R)
                         # Regenerate the message
                         set +m
-                        (generate_commit_message "$diff" > /tmp/git-commit-ai-message.tmp 2>&1) &
+                        (generate_commit_message "$diff" > /tmp/zsh-git-ai-message.tmp 2>&1) &
                         local regenerate_pid=$!
                         show_spinner $regenerate_pid
                         wait $regenerate_pid 2>/dev/null
                         set -m
                         
-                        generated_message=$(cat /tmp/git-commit-ai-message.tmp)
-                        rm -f /tmp/git-commit-ai-message.tmp
+                        generated_message=$(cat /tmp/zsh-git-ai-message.tmp)
+                        rm -f /tmp/zsh-git-ai-message.tmp
                         
                         echo
                         echo "\033[32m✓\033[0m \033[1m$generated_message\033[0m"
