@@ -3,7 +3,29 @@
 # Git Commit AI - Generate commit messages with AI providers
 
 # Get the directory where this script is located
-SCRIPT_DIR="${0:A:h}"
+# Try multiple methods to find the script directory
+if [[ -n "${BASH_SOURCE[0]}" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+elif [[ -n "${(%):-%x}" ]]; then
+    # ZSH-specific: %x expands to the name of the file being sourced
+    SCRIPT_DIR="${${(%):-%x}:A:h}"
+elif [[ -n "$0" ]] && [[ "$0" != "zsh" ]] && [[ "$0" != "-zsh" ]] && [[ "$0" != "/bin/zsh" ]] && [[ "$0" != "/usr/bin/zsh" ]]; then
+    SCRIPT_DIR="${0:A:h}"
+else
+    # Fallback: try to find the script in common locations
+    for dir in ~/Apps/zsh-git-ai ~/.oh-my-zsh/custom/plugins/zsh-git-ai /opt/homebrew/share/zsh-git-ai /usr/local/share/zsh-git-ai; do
+        if [[ -f "$dir/zsh-git-ai.zsh" ]]; then
+            SCRIPT_DIR="$dir"
+            break
+        fi
+    done
+fi
+
+# Verify we found the script directory
+if [[ -z "$SCRIPT_DIR" ]] || [[ ! -d "$SCRIPT_DIR/lib/providers" ]]; then
+    echo "Error: Could not determine script directory. Please check your installation." >&2
+    return 1
+fi
 
 # Default provider
 ZSH_GIT_AI_PROVIDER="${ZSH_GIT_AI_PROVIDER:-anthropic}"
