@@ -21,7 +21,7 @@ jobs:
     - name: Test plugin loading
       run: |
         zsh -c "
-          source zsh-git-ai.zsh 2>/dev/null || true
+          source zsh-git-ai.plugin.zsh 2>/dev/null || true
           if [[ -z \"\$ZSH_GIT_AI_PROVIDER\" ]]; then
             echo 'ERROR: Plugin failed to load'
             exit 1
@@ -33,7 +33,7 @@ jobs:
     - name: Test provider validation
       run: |
         zsh -c "
-          source zsh-git-ai.zsh 2>/dev/null || true
+          source zsh-git-ai.plugin.zsh 2>/dev/null || true
           
           # Test anthropic provider validation
           export ZSH_GIT_AI_PROVIDER='anthropic'
@@ -80,7 +80,7 @@ jobs:
     - name: Test load_provider function
       run: |
         zsh -c "
-          source zsh-git-ai.zsh 2>/dev/null || true
+          source zsh-git-ai.plugin.zsh 2>/dev/null || true
           
           # Test loading valid provider
           export ANTHROPIC_API_KEY='test-key'

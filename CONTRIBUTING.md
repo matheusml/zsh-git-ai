@@ -15,7 +15,7 @@ That's it! We'll help you with the rest.
 
 ```bash
 # Try out your changes
-source zsh-git-ai.zsh
+source zsh-git-ai.plugin.zsh
 
 # Test with a real commit
 git add some-file
@@ -44,8 +44,10 @@ Just follow the existing style you see in the codebase. When in doubt:
 To test your changes:
 
 ```bash
-# 1. Source the plugin
+# 1. Source the plugin (both work for backward compatibility)
 source zsh-git-ai.zsh
+# or
+source zsh-git-ai.plugin.zsh
 
 # 2. Create some test changes
 echo "test" > test.txt

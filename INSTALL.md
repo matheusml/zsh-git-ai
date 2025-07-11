@@ -19,7 +19,7 @@ brew tap matheusml/zsh-git-ai
 brew install zsh-git-ai
 
 # Add to your .zshrc
-echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # Set your API key
 echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.zshrc
@@ -35,7 +35,7 @@ source ~/.zshrc
 git clone https://github.com/matheusml/zsh-git-ai ~/.zsh-git-ai
 
 # Add to your .zshrc
-echo "source ~/.zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source ~/.zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # Set your API key
 echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.zshrc
@@ -56,7 +56,7 @@ brew tap matheusml/zsh-git-ai
 brew install zsh-git-ai
 
 # Add to your shell configuration
-echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # Reload shell
 source ~/.zshrc
@@ -83,7 +83,7 @@ brew untap matheusml/zsh-git-ai
 git clone https://github.com/matheusml/zsh-git-ai ~/Apps/zsh-git-ai
 
 # Source in your .zshrc
-echo "source ~/Apps/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source ~/Apps/zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # Reload
 source ~/.zshrc
@@ -122,14 +122,14 @@ zplug "matheusml/zsh-git-ai"
 
 ```bash
 # Download the script directly
-curl -o ~/.zsh-git-ai.zsh \
-  https://raw.githubusercontent.com/matheusml/zsh-git-ai/main/zsh-git-ai.zsh
+curl -o ~/.zsh-git-ai.plugin.zsh \
+  https://raw.githubusercontent.com/matheusml/zsh-git-ai/main/zsh-git-ai.plugin.zsh
 
 # Make it executable
-chmod +x ~/.zsh-git-ai.zsh
+chmod +x ~/.zsh-git-ai.plugin.zsh
 
 # Source it
-echo "source ~/.zsh-git-ai.zsh" >> ~/.zshrc
+echo "source ~/.zsh-git-ai.plugin.zsh" >> ~/.zshrc
 source ~/.zshrc
 ```
 
@@ -284,7 +284,7 @@ echo $SHELL  # Should show /bin/zsh or similar
 
 2. Verify source path:
 ```bash
-ls -la ~/.zsh-git-ai/zsh-git-ai.zsh  # File should exist
+ls -la ~/.zsh-git-ai/zsh-git-ai.plugin.zsh  # File should exist
 ```
 
 3. Check .zshrc:
@@ -318,7 +318,7 @@ curl -X POST https://api.anthropic.com/v1/messages \
 ### Permission Denied
 
 ```bash
-chmod +x ~/.zsh-git-ai/zsh-git-ai.zsh
+chmod +x ~/.zsh-git-ai/zsh-git-ai.plugin.zsh
 ```
 
 ### Conflicts with Other Plugins
@@ -334,7 +334,7 @@ alias | grep git  # Check aliases
 2. Load order matters in .zshrc:
 ```bash
 # Load zsh-git-ai after other git plugins
-source ~/.zsh-git-ai/zsh-git-ai.zsh
+source ~/.zsh-git-ai/zsh-git-ai.plugin.zsh
 ```
 
 ## Uninstallation
@@ -389,7 +389,7 @@ echo 'alias update-zsh-git-ai="cd ~/.zsh-git-ai && git pull && cd - && source ~/
 git clone https://github.com/matheusml/zsh-git-ai /custom/path/zsh-git-ai
 
 # Source from custom path
-echo "source /custom/path/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source /custom/path/zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 ```
 
 > 📚 **For more advanced configuration options**, including:

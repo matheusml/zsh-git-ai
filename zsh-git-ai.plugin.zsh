@@ -3,7 +3,7 @@
 # Git Commit AI - Generate commit messages with AI providers
 
 # Get the directory where this script is located
-SCRIPT_DIR="${0:A:h}"
+local SCRIPT_DIR="${0:A:h}"
 
 # Default provider
 ZSH_GIT_AI_PROVIDER="${ZSH_GIT_AI_PROVIDER:-anthropic}"
