@@ -16,9 +16,11 @@ $ git commit
 
 ⠋ Generating commit message...
 
-✓ Add AI-powered commit message generation with Claude integration
+✓ AI-generated commit message:
+Add AI-powered commit message generation with Claude integration
 
-→ [A]ccept  [E]dit  [R]egenerate  [C]ancel
+[main abc1234] Add AI-powered commit message generation with Claude integration
+ 2 files changed, 50 insertions(+)
 ```
 
 ## Why zsh-git-ai?
@@ -27,9 +29,9 @@ $ git commit
 
 **⚡ Seamless Integration** - Works with your existing git workflow. Just type `git commit` as usual
 
-**🎨 Beautiful UI** - Fancy spinner animations and colored output for a delightful experience
+**🎨 Simple & Fast** - No prompts or interruptions. AI generates and commits in one smooth action
 
-**🔧 Full Control** - Accept, edit, regenerate, or cancel. You're always in charge
+**🚀 Zero Friction** - Stage your changes and commit. That's it!
 
 **🪶 Lightweight** - Single shell script, no dependencies except optional `jq`
 
@@ -79,11 +81,10 @@ The AI examines your staged changes and understands:
 - The nature of the changes
 - The context and purpose
 
-### 🎮 Interactive Options
-- **Accept** - Use the generated message as-is
-- **Edit** - Tweak the message in your favorite editor
-- **Regenerate** - Get a fresh suggestion
-- **Cancel** - Abort the commit
+### 🚀 Streamlined Workflow
+- Stage your changes with `git add`
+- Run `git commit` (no `-m` needed)
+- AI generates and commits automatically
 
 ### 🎨 Beautiful Output
 - Colorful, intuitive interface

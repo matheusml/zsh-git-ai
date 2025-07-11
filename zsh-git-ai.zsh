@@ -94,60 +94,12 @@ git() {
             
             # Display the generated message
             echo
-            echo "\033[32m✓\033[0m \033[1m$generated_message\033[0m"
+            echo "\033[32m✓\033[0m AI-generated commit message:"
+            echo "\033[1m$generated_message\033[0m"
             echo
             
-            # Prompt user for action
-            while true; do
-                echo -n "\033[36m→\033[0m \033[90m[A]ccept  [E]dit  [R]egenerate  [C]ancel\033[0m "
-                read -k 1 choice
-                echo
-                
-                case "$choice" in
-                    a|A)
-                        command git commit -m "$generated_message"
-                        break
-                        ;;
-                    e|E)
-                        # Create a temporary file with the message for editing
-                        local tmpfile=$(mktemp)
-                        echo "$generated_message" > "$tmpfile"
-                        ${EDITOR:-nano} "$tmpfile"
-                        local edited_message=$(cat "$tmpfile")
-                        rm -f "$tmpfile"
-                        
-                        if [[ -n "$edited_message" ]]; then
-                            command git commit -m "$edited_message"
-                        else
-                            echo "Commit cancelled (empty message)"
-                        fi
-                        break
-                        ;;
-                    r|R)
-                        # Regenerate the message
-                        set +m
-                        (generate_commit_message "$diff" "$status_output" > /tmp/zsh-git-ai-message.tmp 2>&1) &
-                        local regenerate_pid=$!
-                        show_spinner $regenerate_pid
-                        wait $regenerate_pid 2>/dev/null
-                        set -m
-                        
-                        generated_message=$(cat /tmp/zsh-git-ai-message.tmp)
-                        rm -f /tmp/zsh-git-ai-message.tmp
-                        
-                        echo
-                        echo "\033[32m✓\033[0m \033[1m$generated_message\033[0m"
-                        echo
-                        ;;
-                    c|C)
-                        echo "\033[33m✗\033[0m Commit cancelled"
-                        break
-                        ;;
-                    *)
-                        echo "Invalid choice. Please select A, E, R, or C."
-                        ;;
-                esac
-            done
+            # Commit with the generated message
+            command git commit -m "$generated_message"
         else
             echo "No changes staged for commit"
             return 1
