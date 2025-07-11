@@ -99,4 +99,5 @@ The AI examines your staged changes and understands:
 ## Documentation
 
 - 📦 **[Installation & Setup](INSTALL.md)** - Detailed installation instructions for all package managers
+- ⚙️ **[Configuration Guide](CONFIGURATION.md)** - Customize providers, commit styles, and advanced settings
 - 🤝 **[Contributing](CONTRIBUTING.md)** - Help make zsh-git-ai better!

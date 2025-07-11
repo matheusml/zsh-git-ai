@@ -133,44 +133,27 @@ echo "source ~/.zsh-git-ai.zsh" >> ~/.zshrc
 source ~/.zshrc
 ```
 
-## Provider Setup
+## Configuration
 
-### 🔧 Supported Providers
+zsh-git-ai supports multiple AI providers and extensive customization options.
 
-zsh-git-ai supports multiple AI providers. Set your preferred provider with:
+### Quick Setup
 
 ```bash
-export ZSH_GIT_AI_PROVIDER="anthropic"  # Default
-```
-
-#### Available Providers:
-
-**Anthropic Claude** (default)
-```bash
+# Set your provider (default: anthropic)
 export ZSH_GIT_AI_PROVIDER="anthropic"
+
+# Set your API key
 export ANTHROPIC_API_KEY="your-api-key-here"
 ```
 
-**OpenAI GPT**
-```bash
-export ZSH_GIT_AI_PROVIDER="openai"
-export OPENAI_API_KEY="your-api-key-here"
-```
-
-**Google Gemini**
-```bash
-export ZSH_GIT_AI_PROVIDER="gemini"
-export GEMINI_API_KEY="your-api-key-here"
-```
-
-**Ollama** (local models)
-```bash
-export ZSH_GIT_AI_PROVIDER="ollama"
-export OLLAMA_MODEL="llama2"  # Optional, defaults to llama2
-export OLLAMA_API_URL="http://localhost:11434"  # Optional
-```
-
-> 💡 **Tip**: Add these exports to your `~/.zshrc` to make them permanent
+> 📚 **For detailed configuration options**, including:
+> - All supported providers and their settings
+> - Commit message customization (styles, length, custom prompts)
+> - Provider-specific configuration
+> - Advanced setup (per-project config, SSH, tmux)
+>
+> **See the [Configuration Guide](CONFIGURATION.md)**
 
 ## API Key Setup
 
@@ -397,7 +380,7 @@ Or set up an alias:
 echo 'alias update-zsh-git-ai="cd ~/.zsh-git-ai && git pull && cd - && source ~/.zshrc"' >> ~/.zshrc
 ```
 
-## Advanced Configuration
+## Advanced Setup
 
 ### Custom Installation Location
 
@@ -409,30 +392,13 @@ git clone https://github.com/matheusml/zsh-git-ai /custom/path/zsh-git-ai
 echo "source /custom/path/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 ```
 
-### Using with Tmux
-
-Add to `.tmux.conf` to preserve environment:
-```bash
-# Add all possible API keys
-set-option -g update-environment "ANTHROPIC_API_KEY OPENAI_API_KEY GEMINI_API_KEY ZSH_GIT_AI_PROVIDER"
-```
-
-### Using with SSH
-
-Forward your API key when SSHing:
-```bash
-# Send API key based on your provider
-ssh -o SendEnv=ANTHROPIC_API_KEY user@host
-# Or for other providers:
-# ssh -o SendEnv=OPENAI_API_KEY user@host
-# ssh -o SendEnv=GEMINI_API_KEY user@host
-# ssh -o "SendEnv=ZSH_GIT_AI_PROVIDER ANTHROPIC_API_KEY" user@host
-```
-
-Add to server's `/etc/ssh/sshd_config`:
-```
-AcceptEnv ANTHROPIC_API_KEY OPENAI_API_KEY GEMINI_API_KEY ZSH_GIT_AI_PROVIDER
-```
+> 📚 **For more advanced configuration options**, including:
+> - tmux integration
+> - SSH environment forwarding
+> - Per-project configuration
+> - Custom commit message styles and prompts
+>
+> **See the [Configuration Guide](CONFIGURATION.md)**
 
 ---
 
