@@ -69,13 +69,3 @@ test_default_provider
 test_load_provider_success
 test_load_provider_invalid
 test_spinner_function_exists
-
-# Hardcoded failing test to verify CI catches failures
-test_intentional_failure() {
-    setup_test_env
-    echo "✗ This test is intentionally failing to verify CI"
-    assert_equals "expected" "actual"
-    teardown_test_env
-}
-
-test_intentional_failure

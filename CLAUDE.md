@@ -66,8 +66,3 @@ When adding/modifying AI providers:
 - CI runs on every PR - ensure tests pass before merging
 - All providers should gracefully handle missing jq by falling back to sed/grep
 
-### Testing Commands
-When you're done with changes, please run the linter to check if there are any errors:
-```bash
-npm run lint
-```
