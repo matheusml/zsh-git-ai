@@ -48,7 +48,7 @@ brew tap matheusml/zsh-git-ai
 brew install zsh-git-ai
 
 # 2. Add to your shell
-echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source $(brew --prefix)/share/zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # 3. Set up your API key
 export ANTHROPIC_API_KEY="your-api-key-here"
@@ -63,7 +63,7 @@ git commit  # No -m needed!
 ```bash
 # 1. Clone the repository
 git clone https://github.com/matheusml/zsh-git-ai ~/.zsh-git-ai
-echo "source ~/.zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
+echo "source ~/.zsh-git-ai/zsh-git-ai.plugin.zsh" >> ~/.zshrc
 
 # 2. Set up your API key
 export ANTHROPIC_API_KEY="your-api-key-here"

@@ -7,7 +7,7 @@ source "${0:A:h}/test_helper.zsh"
 test_default_provider() {
     setup_test_env
     unset ZSH_GIT_AI_PROVIDER
-    source "$PLUGIN_DIR/zsh-git-ai.zsh" 2>/dev/null || true
+    source "$PLUGIN_DIR/zsh-git-ai.plugin.zsh" 2>/dev/null || true
     # Default should be anthropic
     assert_equals "$ZSH_GIT_AI_PROVIDER" "anthropic"
     teardown_test_env
@@ -24,7 +24,7 @@ test_load_provider_success() {
     }
     
     # Source just the load_provider function
-    source "$PLUGIN_DIR/zsh-git-ai.zsh" 2>/dev/null || true
+    source "$PLUGIN_DIR/zsh-git-ai.plugin.zsh" 2>/dev/null || true
     local result
     load_provider "anthropic" >/dev/null 2>&1
     result=$?
@@ -38,7 +38,7 @@ test_load_provider_invalid() {
     export ZSH_GIT_AI_PROVIDER="invalid_provider"
     
     # Source just the load_provider function
-    source "$PLUGIN_DIR/zsh-git-ai.zsh" 2>/dev/null || true
+    source "$PLUGIN_DIR/zsh-git-ai.plugin.zsh" 2>/dev/null || true
     local output
     output=$(load_provider "invalid_provider" 2>&1)
     local result=$?
@@ -50,7 +50,7 @@ test_load_provider_invalid() {
 
 test_spinner_function_exists() {
     setup_test_env
-    source "$PLUGIN_DIR/zsh-git-ai.zsh" 2>/dev/null || true
+    source "$PLUGIN_DIR/zsh-git-ai.plugin.zsh" 2>/dev/null || true
     
     # Check if show_spinner function is defined
     if type show_spinner >/dev/null 2>&1; then

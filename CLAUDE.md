@@ -57,7 +57,7 @@ When adding/modifying AI providers:
 ### Common Tasks
 - **Adding a new provider**: Copy existing provider pattern, add tests
 - **Modifying commit generation**: Update provider logic and test with various diff formats
-- **Changing main script logic**: Update `zsh-git-ai.zsh` and test in `tests/main.test.zsh`
+- **Changing main script logic**: Update `zsh-git-ai.plugin.zsh` and test in `tests/main.test.zsh`
 
 ### Important Notes
 - This is a shell-only project - no Node.js, Python, or other runtimes
