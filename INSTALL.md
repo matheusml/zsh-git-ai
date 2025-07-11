@@ -133,15 +133,74 @@ echo "source ~/.zsh-git-ai.zsh" >> ~/.zshrc
 source ~/.zshrc
 ```
 
+## Provider Setup
+
+### 🔧 Supported Providers
+
+zsh-git-ai supports multiple AI providers. Set your preferred provider with:
+
+```bash
+export ZSH_GIT_AI_PROVIDER="anthropic"  # Default
+```
+
+#### Available Providers:
+
+**Anthropic Claude** (default)
+```bash
+export ZSH_GIT_AI_PROVIDER="anthropic"
+export ANTHROPIC_API_KEY="your-api-key-here"
+```
+
+**OpenAI GPT**
+```bash
+export ZSH_GIT_AI_PROVIDER="openai"
+export OPENAI_API_KEY="your-api-key-here"
+```
+
+**Google Gemini**
+```bash
+export ZSH_GIT_AI_PROVIDER="gemini"
+export GEMINI_API_KEY="your-api-key-here"
+```
+
+**Ollama** (local models)
+```bash
+export ZSH_GIT_AI_PROVIDER="ollama"
+export OLLAMA_MODEL="llama2"  # Optional, defaults to llama2
+export OLLAMA_API_URL="http://localhost:11434"  # Optional
+```
+
+> 💡 **Tip**: Add these exports to your `~/.zshrc` to make them permanent
+
 ## API Key Setup
 
 ### Getting Your API Key
 
+#### Anthropic Claude
 1. Go to [Anthropic Console](https://console.anthropic.com/)
 2. Sign up or log in
 3. Navigate to API Keys section
 4. Create a new API key
 5. Copy the key (it won't be shown again!)
+
+#### OpenAI GPT
+1. Go to [OpenAI Platform](https://platform.openai.com/)
+2. Sign up or log in
+3. Navigate to API Keys section
+4. Create a new API key
+5. Copy the key
+
+#### Google Gemini
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Sign in with your Google account
+3. Click "Get API Key"
+4. Create a new API key or use existing one
+5. Copy the key
+
+#### Ollama (Local)
+1. Install Ollama from [ollama.ai](https://ollama.ai/)
+2. Pull a model: `ollama pull llama2`
+3. No API key needed - runs locally!
 
 ### Setting the API Key
 
@@ -149,12 +208,26 @@ Choose one of these methods:
 
 #### Option 1: Add to .zshrc (Recommended)
 ```bash
+# For Anthropic (default)
 echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshrc
+
+# For OpenAI
+echo 'export ZSH_GIT_AI_PROVIDER="openai"' >> ~/.zshrc
+echo 'export OPENAI_API_KEY="sk-..."' >> ~/.zshrc
+
+# For Gemini
+echo 'export ZSH_GIT_AI_PROVIDER="gemini"' >> ~/.zshrc
+echo 'export GEMINI_API_KEY="AI..."' >> ~/.zshrc
+
+# For Ollama
+echo 'export ZSH_GIT_AI_PROVIDER="ollama"' >> ~/.zshrc
+
 source ~/.zshrc
 ```
 
 #### Option 2: Add to .zshenv
 ```bash
+# Example for Anthropic
 echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.zshenv
 source ~/.zshenv
 ```
@@ -200,8 +273,13 @@ Verify your installation:
 # Check if the function is loaded
 type git | grep -q "git is a shell function" && echo "✓ Plugin loaded" || echo "✗ Plugin not loaded"
 
-# Check if API key is set
+# Check if API key is set (adjust based on your provider)
+# For Anthropic (default)
 [[ -n "$ANTHROPIC_API_KEY" ]] && echo "✓ API key set" || echo "✗ API key not set"
+# For OpenAI
+# [[ -n "$OPENAI_API_KEY" ]] && echo "✓ API key set" || echo "✗ API key not set"
+# For Gemini
+# [[ -n "$GEMINI_API_KEY" ]] && echo "✓ API key set" || echo "✗ API key not set"
 
 # Test with a dummy commit
 mkdir /tmp/zsh-git-ai-test
@@ -235,7 +313,10 @@ grep zsh-git-ai ~/.zshrc  # Should show the source line
 
 1. Verify key is set:
 ```bash
-echo $ANTHROPIC_API_KEY  # Should show your key (be careful sharing!)
+# Check based on your provider
+echo $ANTHROPIC_API_KEY  # For Anthropic
+# echo $OPENAI_API_KEY  # For OpenAI
+# echo $GEMINI_API_KEY  # For Gemini
 ```
 
 2. Test API directly:
@@ -284,8 +365,11 @@ sed -i '' '/zsh-git-ai/d' ~/.zshrc
 # Remove the installation
 rm -rf ~/.zsh-git-ai
 
-# Remove API key (optional)
+# Remove API key (optional) - adjust based on your provider
 sed -i '' '/ANTHROPIC_API_KEY/d' ~/.zshrc
+sed -i '' '/OPENAI_API_KEY/d' ~/.zshrc
+sed -i '' '/GEMINI_API_KEY/d' ~/.zshrc
+sed -i '' '/ZSH_GIT_AI_PROVIDER/d' ~/.zshrc
 
 # Reload shell
 source ~/.zshrc
@@ -329,19 +413,25 @@ echo "source /custom/path/zsh-git-ai/zsh-git-ai.zsh" >> ~/.zshrc
 
 Add to `.tmux.conf` to preserve environment:
 ```bash
-set-option -g update-environment "ANTHROPIC_API_KEY"
+# Add all possible API keys
+set-option -g update-environment "ANTHROPIC_API_KEY OPENAI_API_KEY GEMINI_API_KEY ZSH_GIT_AI_PROVIDER"
 ```
 
 ### Using with SSH
 
 Forward your API key when SSHing:
 ```bash
+# Send API key based on your provider
 ssh -o SendEnv=ANTHROPIC_API_KEY user@host
+# Or for other providers:
+# ssh -o SendEnv=OPENAI_API_KEY user@host
+# ssh -o SendEnv=GEMINI_API_KEY user@host
+# ssh -o "SendEnv=ZSH_GIT_AI_PROVIDER ANTHROPIC_API_KEY" user@host
 ```
 
 Add to server's `/etc/ssh/sshd_config`:
 ```
-AcceptEnv ANTHROPIC_API_KEY
+AcceptEnv ANTHROPIC_API_KEY OPENAI_API_KEY GEMINI_API_KEY ZSH_GIT_AI_PROVIDER
 ```
 
 ---
