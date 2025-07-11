@@ -19,9 +19,10 @@ $ git commit
 ✓ AI-generated commit message:
 Add AI-powered commit message generation with Claude integration
 
-[main abc1234] Add AI-powered commit message generation with Claude integration
- 2 files changed, 50 insertions(+)
+$ git commit -m "Add AI-powered commit message generation with Claude integration"
 ```
+
+The command is populated in your terminal - just press ENTER to commit or edit the message first!
 
 ## Why zsh-git-ai?
 
@@ -29,9 +30,9 @@ Add AI-powered commit message generation with Claude integration
 
 **⚡ Seamless Integration** - Works with your existing git workflow. Just type `git commit` as usual
 
-**🎨 Simple & Fast** - No prompts or interruptions. AI generates and commits in one smooth action
+**🎨 Simple & Fast** - AI generates the message and populates your command line
 
-**🚀 Zero Friction** - Stage your changes and commit. That's it!
+**🔧 Full Control** - Press ENTER to commit or edit the message before committing
 
 **🪶 Lightweight** - Single shell script, no dependencies except optional `jq`
 
@@ -84,7 +85,8 @@ The AI examines your staged changes and understands:
 ### 🚀 Streamlined Workflow
 - Stage your changes with `git add`
 - Run `git commit` (no `-m` needed)
-- AI generates and commits automatically
+- AI generates message and populates command line
+- Press ENTER to commit or edit first
 
 ### 🎨 Beautiful Output
 - Colorful, intuitive interface

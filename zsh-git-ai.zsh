@@ -98,8 +98,9 @@ git() {
             echo "\033[1m$generated_message\033[0m"
             echo
             
-            # Commit with the generated message
-            command git commit -m "$generated_message"
+            # Populate the command line with the git commit command
+            # The user can press ENTER to execute or edit the command
+            print -z "git commit -m \"$generated_message\""
         else
             echo "No changes staged for commit"
             return 1
