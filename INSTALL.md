@@ -172,6 +172,43 @@ export OLLAMA_API_URL="http://localhost:11434"  # Optional
 
 > 💡 **Tip**: Add these exports to your `~/.zshrc` to make them permanent
 
+### 🎨 Customizing Commit Messages
+
+You can customize how commit messages are generated:
+
+#### Commit Message Style
+```bash
+export ZSH_GIT_AI_STYLE="conventional"  # Options: simple (default), conventional, semantic
+```
+
+- **simple** (default): Clean, straightforward commit messages
+- **conventional**: Follows [Conventional Commits](https://www.conventionalcommits.org/) format: `type(scope): subject`
+- **semantic**: Uses semantic prefixes like "Add", "Update", "Fix", "Remove"
+
+#### Custom Message Length
+```bash
+export ZSH_GIT_AI_MAX_LENGTH="100"  # Default: 72 characters
+```
+
+#### Custom Prompt Template
+For complete control, provide your own prompt:
+```bash
+export ZSH_GIT_AI_PROMPT="Generate a funny commit message in pirate speak for these changes:"
+```
+
+> 💡 **Examples**:
+> ```bash
+> # Use conventional commits style
+> export ZSH_GIT_AI_STYLE="conventional"
+> 
+> # Semantic style with longer messages
+> export ZSH_GIT_AI_STYLE="semantic"
+> export ZSH_GIT_AI_MAX_LENGTH="100"
+> 
+> # Completely custom prompt
+> export ZSH_GIT_AI_PROMPT="Write a commit message as a haiku:"
+> ```
+
 ## API Key Setup
 
 ### Getting Your API Key

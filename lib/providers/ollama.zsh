@@ -2,6 +2,9 @@
 
 # Ollama provider for git-commit-ai
 
+# Source the prompt builder
+source "${0:A:h}/../prompt_builder.zsh"
+
 ollama_api_url="${OLLAMA_API_URL:-http://localhost:11434}"
 ollama_model="${OLLAMA_MODEL:-llama2}"
 
@@ -25,20 +28,7 @@ ollama_generate_commit_message() {
     local git_diff="$1"
     local status_output="$2"
     
-    local prompt="You are a helpful assistant that writes concise and descriptive git commit messages.
-
-Based on the following git diff and status, generate a clear and concise commit message.
-The commit message should:
-- Be written in the imperative mood (e.g., 'Add feature' not 'Added feature')
-- Be no longer than 72 characters
-- Clearly describe what the change does, not how it does it
-- Only output the commit message, nothing else
-
-Git status:
-$status_output
-
-Git diff:
-$git_diff"
+    local prompt=$(build_commit_prompt "$git_diff" "$status_output")
 
     local json_payload
     if command -v jq &> /dev/null; then
