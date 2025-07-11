@@ -1,11 +1,36 @@
 #!/usr/bin/env zsh
 
-# Git Commit AI - Generate commit messages with Claude
+# Git Commit AI - Generate commit messages with AI providers
 
-# Check if Claude API key is set
-if [[ -z "$ANTHROPIC_API_KEY" ]]; then
-    echo "Error: ANTHROPIC_API_KEY environment variable not set" >&2
-    echo "Please set it with: export ANTHROPIC_API_KEY='your-api-key'" >&2
+# Get the directory where this script is located
+SCRIPT_DIR="${0:A:h}"
+
+# Default provider
+ZSH_GIT_AI_PROVIDER="${ZSH_GIT_AI_PROVIDER:-anthropic}"
+
+# Source the selected provider
+load_provider() {
+    local provider="$1"
+    local provider_file="${SCRIPT_DIR}/lib/providers/${provider}.zsh"
+    
+    if [[ ! -f "$provider_file" ]]; then
+        echo "Error: Provider '$provider' not found" >&2
+        echo "Available providers: anthropic, openai, gemini, ollama" >&2
+        return 1
+    fi
+    
+    source "$provider_file"
+    
+    # Check provider requirements
+    if ! ${provider}_check_requirements; then
+        return 1
+    fi
+    
+    return 0
+}
+
+# Load the configured provider
+if ! load_provider "$ZSH_GIT_AI_PROVIDER"; then
     return 1
 fi
 
@@ -23,62 +48,13 @@ show_spinner() {
     printf "\r\033[K"
 }
 
-# Function to call Claude API
+# Function to generate commit message using the selected provider
 generate_commit_message() {
     local diff="$1"
+    local status_output="$2"
     
-    # Use printf and jq for proper JSON encoding
-    local json_payload
-    if command -v jq >/dev/null 2>&1; then
-        # Use jq if available for proper JSON encoding
-        json_payload=$(jq -n \
-            --arg model "claude-3-5-sonnet-20241022" \
-            --arg content "Generate a concise git commit message for the following changes. Write a clear, descriptive message without any prefix like 'feat:', 'docs:', 'fix:', etc. Just describe what was changed. Only return the commit message, nothing else:
-
-$diff" \
-            '{
-                model: $model,
-                max_tokens: 100,
-                messages: [{
-                    role: "user",
-                    content: $content
-                }]
-            }')
-    else
-        # Fallback: use a more aggressive escaping approach
-        local escaped_diff=$(printf '%s' "$diff" | sed 's/[\\]/\\\\/g; s/"/\\"/g; s/	/\\t/g; s/$/\\n/' | tr -d '\n' | sed 's/\\n$//')
-        json_payload="{
-            \"model\": \"claude-3-5-sonnet-20241022\",
-            \"max_tokens\": 100,
-            \"messages\": [{
-                \"role\": \"user\",
-                \"content\": \"Generate a concise git commit message for the following changes. Write a clear, descriptive message without any prefix like 'feat:', 'docs:', 'fix:', etc. Just describe what was changed. Only return the commit message, nothing else:\\n\\n${escaped_diff}\"
-            }]
-        }"
-    fi
-    
-    # Prepare the API request
-    local response=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
-        -H "Content-Type: application/json" \
-        -H "x-api-key: $ANTHROPIC_API_KEY" \
-        -H "anthropic-version: 2023-06-01" \
-        -d "$json_payload"
-    )
-    
-    # Extract the message from the response using more robust JSON parsing
-    local message=$(echo "$response" | grep -o '"text":"[^"]*"' | head -1 | sed 's/"text":"//; s/"$//')
-    
-    # Handle JSON escape sequences
-    message=$(echo "$message" | sed 's/\\n/\n/g; s/\\"/"/g; s/\\\\/\\/g')
-    
-    if [[ -z "$message" ]]; then
-        # Debug: show the actual response for troubleshooting
-        echo "Error: Failed to parse commit message from API response" >&2
-        echo "Response: $response" >&2
-        return 1
-    fi
-    
-    echo "$message"
+    # Call the provider-specific function
+    ${ZSH_GIT_AI_PROVIDER}_generate_commit_message "$diff" "$status_output"
 }
 
 # Override git function
@@ -89,12 +65,13 @@ git() {
         if ! command git diff --cached --quiet; then
             # Get the diff of staged changes
             local diff=$(command git diff --cached)
+            local status_output=$(command git status --short)
             
             # Disable job control messages
             set +m
             
             # Generate commit message with spinner
-            (generate_commit_message "$diff" > /tmp/zsh-git-ai-message.tmp 2>&1) &
+            (generate_commit_message "$diff" "$status_output" > /tmp/zsh-git-ai-message.tmp 2>&1) &
             local generate_pid=$!
             show_spinner $generate_pid
             wait $generate_pid 2>/dev/null
@@ -149,7 +126,7 @@ git() {
                     r|R)
                         # Regenerate the message
                         set +m
-                        (generate_commit_message "$diff" > /tmp/zsh-git-ai-message.tmp 2>&1) &
+                        (generate_commit_message "$diff" "$status_output" > /tmp/zsh-git-ai-message.tmp 2>&1) &
                         local regenerate_pid=$!
                         show_spinner $regenerate_pid
                         wait $regenerate_pid 2>/dev/null
