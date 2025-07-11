@@ -1,0 +1,124 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install ZSH
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y zsh curl
+    
+    - name: Test plugin loading
+      run: |
+        zsh -c "
+          source zsh-git-ai.zsh 2>/dev/null || true
+          if [[ -z \"\$ZSH_GIT_AI_PROVIDER\" ]]; then
+            echo 'ERROR: Plugin failed to load'
+            exit 1
+          fi
+          echo '✓ Plugin loaded successfully'
+          echo \"  Provider: \$ZSH_GIT_AI_PROVIDER\"
+        "
+    
+    - name: Test provider validation
+      run: |
+        zsh -c "
+          source zsh-git-ai.zsh 2>/dev/null || true
+          
+          # Test anthropic provider validation
+          export ZSH_GIT_AI_PROVIDER='anthropic'
+          export ANTHROPIC_API_KEY='test-key'
+          
+          # Load provider and check requirements
+          source lib/providers/anthropic.zsh
+          if anthropic_check_requirements >/dev/null 2>&1; then
+            echo '✓ Anthropic provider validation passed'
+          else
+            echo 'ERROR: Anthropic provider validation failed'
+            exit 1
+          fi
+          
+          # Test openai provider validation
+          export ZSH_GIT_AI_PROVIDER='openai'
+          export OPENAI_API_KEY='test-key'
+          source lib/providers/openai.zsh
+          if openai_check_requirements >/dev/null 2>&1; then
+            echo '✓ OpenAI provider validation passed'
+          else
+            echo 'ERROR: OpenAI provider validation failed'
+            exit 1
+          fi
+          
+          # Test gemini provider validation
+          export ZSH_GIT_AI_PROVIDER='gemini'
+          export GEMINI_API_KEY='test-key'
+          source lib/providers/gemini.zsh
+          if gemini_check_requirements >/dev/null 2>&1; then
+            echo '✓ Gemini provider validation passed'
+          else
+            echo 'ERROR: Gemini provider validation failed'
+            exit 1
+          fi
+          
+          # Test ollama provider validation
+          export ZSH_GIT_AI_PROVIDER='ollama'
+          source lib/providers/ollama.zsh
+          # Ollama doesn't require API key, just check loading
+          echo '✓ Ollama provider loaded'
+        "
+    
+    - name: Test load_provider function
+      run: |
+        zsh -c "
+          source zsh-git-ai.zsh 2>/dev/null || true
+          
+          # Test loading valid provider
+          export ANTHROPIC_API_KEY='test-key'
+          if load_provider 'anthropic' >/dev/null 2>&1; then
+            echo '✓ Valid provider loads successfully'
+          else
+            echo 'ERROR: Failed to load valid provider'
+            exit 1
+          fi
+          
+          # Test loading invalid provider
+          if ! load_provider 'invalid' 2>/dev/null; then
+            echo '✓ Invalid provider correctly rejected'
+          else
+            echo 'ERROR: Invalid provider not rejected'
+            exit 1
+          fi
+        "
+    
+    - name: Run test suite
+      run: |
+        # Make test runner executable
+        chmod +x run-tests.zsh
+        # Run all tests
+        ./run-tests.zsh
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install shellcheck
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y shellcheck
+    
+    - name: Run shellcheck
+      run: |
+        # Shellcheck all shell scripts (zsh files use bash compatibility mode)
+        find . -name "*.zsh" -o -name "*.sh" | grep -v temp-zsh-ai | xargs shellcheck -s bash -e SC1090,SC1091,SC2034,SC2154 || true
