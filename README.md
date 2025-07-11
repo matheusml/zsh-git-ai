@@ -12,17 +12,10 @@ Just run `git commit` (without `-m`) and watch the magic happen:
 
 ```bash
 $ git add .
-$ git commit
-
-⠋ Generating commit message...
-
-✓ AI-generated commit message:
-Add AI-powered commit message generation with Claude integration
-
 $ git commit -m "Add AI-powered commit message generation with Claude integration"
 ```
 
-The command is populated in your terminal - just press ENTER to commit or edit the message first!
+Your `git commit` is instantly replaced with a complete command including an AI-generated message. Press ENTER to execute or edit first!
 
 ## Why zsh-git-ai?
 

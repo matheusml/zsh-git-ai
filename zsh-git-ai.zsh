@@ -92,14 +92,9 @@ git() {
                 return 1
             fi
             
-            # Display the generated message
-            echo
-            echo "\033[32m✓\033[0m AI-generated commit message:"
-            echo "\033[1m$generated_message\033[0m"
-            echo
-            
-            # Populate the command line with the git commit command
-            # The user can press ENTER to execute or edit the command
+            # Clear the current line and replace with the commit command
+            # This will replace the "git commit" the user just typed
+            echo -ne "\r\033[K"
             print -z "git commit -m \"$generated_message\""
         else
             echo "No changes staged for commit"
