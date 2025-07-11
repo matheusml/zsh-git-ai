@@ -2,11 +2,14 @@
 
 # Git Commit AI - Generate commit messages with AI providers
 
-# Get the directory where this script is located
-local SCRIPT_DIR="${0:A:h}"
+# Get plugin directory for initial config loading
+local plugin_dir="${0:A:h}"
 
-# Default provider
-ZSH_GIT_AI_PROVIDER="${ZSH_GIT_AI_PROVIDER:-anthropic}"
+# Source configuration
+source "${plugin_dir}/lib/config.zsh" || return 1
+
+# Now use the configured directory
+SCRIPT_DIR="${ZSH_GIT_AI_DIR}"
 
 # Source the selected provider
 load_provider() {
