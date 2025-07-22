@@ -76,25 +76,6 @@ git commit  # No -m needed!
 📚 **[Full Installation Guide →](INSTALL.md)**
 
 
-## Features
-
-### 🎯 Intelligent Analysis
-The AI examines your staged changes and understands:
-- What files were modified
-- The nature of the changes
-- The context and purpose
-
-### 🚀 How It Works
-1. Stage your changes with `git add`
-2. Type `git commit` and press ENTER
-3. AI analyzes your changes and generates a message
-4. Your command is replaced with `git commit -m "Generated message"`
-5. Press ENTER again to commit, or edit the message first
-
-### 🎨 Beautiful Output
-- Colorful, intuitive interface
-- Smooth loading animations
-- Clear status indicators
 
 ## Documentation
 
