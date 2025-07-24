@@ -95,8 +95,14 @@ git() {
                 return 1
             fi
             
-            # Execute the commit directly with the generated message
-            command git commit -m "$generated_message"
+            # Move cursor to beginning of line and clear it
+            echo -ne "\r\033[K"
+            
+            # Put the command in the buffer for editing
+            print -z "git commit -m \"$generated_message\""
+            
+            # Return false to prevent execution of the original command
+            return 1
         else
             echo "No changes staged for commit"
             return 1
