@@ -95,10 +95,8 @@ git() {
                 return 1
             fi
             
-            # Clear the current line and replace with the commit command
-            # This will replace the "git commit" the user just typed
-            echo -ne "\r\033[K"
-            print -z "git commit -m \"$generated_message\""
+            # Execute the commit directly with the generated message
+            command git commit -m "$generated_message"
         else
             echo "No changes staged for commit"
             return 1
